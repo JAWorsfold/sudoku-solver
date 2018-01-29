@@ -1,4 +1,4 @@
-# import unittest
+import unittest
 from sudoku import *
 import copy
 
@@ -74,9 +74,9 @@ def test_eliminate():
 
 def test_isSolved():
     array = [[{1}] * 9] * 9
-    assert all([len(array[r][c]) == 1 for r in range(0, 9) for c in range(0, 9)])
+    assert isSolved(array) == True
     array[3][5] = {1, 2}
-    assert all([len(array[r][c]) != 1 for r in range(0, 9) for c in range(0, 9)])
+    assert isSolved(array) == False
 
 
 def test_solve():
@@ -169,12 +169,12 @@ def tryToSolve(problem, solution):
 
 
 # class TestSudoku2011(unittest.TestCase):
-
-    # def testConvertToSets(self):
-    #     ary = [[0, 1, 2], [1, 0, 2], [0, 1, 0]]
-    #     s = set(range(1, 10))
-    #     self.assertEqual([[s, {1}, {2}], [{1}, s, {2}], [s, {1}, s]], convertToSets(ary))
-    #     self.assertTrue(type(ary[0][0]) is int, "The original array has been changed.")
+#
+#     def testConvertToSets(self):
+#         ary = [[0, 1, 2], [1, 0, 2], [0, 1, 0]]
+#         s = set(range(1, 10))
+#         self.assertEqual([[s, {1}, {2}], [{1}, s, {2}], [s, {1}, s]], convertToSets(ary))
+#         self.assertTrue(type(ary[0][0]) is int, "The original array has been changed.")
 
     # def testConvertToInts(self):
     #     sets = [[{1, 2}, {3}, {4}], [{1}, {3, 5, 7}, {2}], [{2, 3}, {2}, {3}]]
@@ -209,6 +209,7 @@ def tryToSolve(problem, solution):
     #     array[3][5] = {1, 2}
     #     self.assertFalse(all([len(array[r][c]) == 1 for r in range(0, 9)
     #                           for c in range(0, 9)]))
+
 
 #     def testSolve(self):
 #         # Easy
