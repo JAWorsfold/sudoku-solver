@@ -116,24 +116,47 @@ def solve(problem):
                                        getColumnLocations(j) +
                                        getBoxLocations(location))
                     count += eliminate(problem, location, listOfLocations)
-            if count == 0:
-                return False
+        if count == 0:
+            return False
         solved = isSolved(problem)
     return True
 
 
 def print_sudoku(problem):
-    """ """
-    pass
+    """Prints the Sudoku array (given as a list of lists of integers) in
+    the following form, using dots to represent zeros."""
+    border = "+-------+-------+-------+"
+    for i in range(len(problem)):
+        if i == 0 or i == 3 or i == 6:
+            print(border)
+        for j in range(len(problem[0])):
+            if j == 0 or j == 3 or j == 6:
+                print("| ", end='')
+            if problem[i][j] == 0:
+                print(". ", end='')
+            else:
+                print(str(problem[i][j]) + " ", end='')
+        print("|")
+    print(border)
 
 
 def main():
     problem = read_sudoku(input("Name the file containing the puzzle: "))
-    problem_set = convertToSets(problem)
-    print(problem_set)
-    problem_int = convertToInts(problem_set)
-    print(problem_int)
-    return problem
+    print_sudoku(problem)
+    problemAsSets = convertToSets(problem)
+    solved = solve(problemAsSets)
+    result = convertToInts(problemAsSets)
+    print_sudoku(result)
+    if not solved:
+        for i in range(len(problemAsSets)):
+            for j in range(len(problemAsSets[0])):
+                if len(problemAsSets[i][j]) > 1:
+                    print("Location " + str((i, j)) + " might be any of " +
+                          str(problemAsSets[i][j]))
+    ask = input("Do you want to read in and solve another puzzle? (Y/y): ")
+    accpt = {'Y', 'y', 'Yes', 'yes', 'YES'}
+    if ask in accpt:
+        main()
 
 
 if __name__ == '__main__':
