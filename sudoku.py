@@ -26,12 +26,12 @@ def convertToInts(problem):
     """Given a two-dimensional array `problem` of sets, create and return a
     new two-dimensional array of integers."""
     new_lst = [[y for y in x] for x in problem]
-    for i in range(len(new_lst)):
-        for j in range(len(new_lst[0])):
-            if len(new_lst[i][j]) > 1:
-                new_lst[i][j] = 0
+    for row in range(len(new_lst)):
+        for column in range(len(new_lst[0])):
+            if len(new_lst[row][column]) > 1:
+                new_lst[row][column] = 0
             else:
-                new_lst[i][j] = next(iter(new_lst[i][j]))
+                new_lst[row][column] = next(iter(new_lst[row][column]))
     return new_lst
 
 
@@ -75,12 +75,12 @@ def getBoxLocations(location):
 def eliminate(problem, location, listOfLocations):
     """For each location in the `listOfLocations`, except `location`, remove
     the number in `location` from the set in each other location."""
-    r, c = location
-    single_set = problem[r][c]
+    row, column = location
+    single_set = problem[row][column]
     count = 0
-    for i in listOfLocations:
-        x, y = i
-        if (x, y) != (r, c):
+    for list_location in listOfLocations:
+        x, y = list_location
+        if (x, y) != (row, column):
             if single_set <= problem[x][y]:
                 problem[x][y] -= single_set
                 count += 1
@@ -91,9 +91,9 @@ def isSolved(problem):
     """Given a two-dimensional array `problem` of sets, return `True` if
     the Sudoku problem has been solved (every set contains exactly one
     element), and `False` otherwise."""
-    for i in range(len(problem)):
-        for j in range(len(problem[0])):
-            if len(problem[i][j]) > 1:
+    for row in range(len(problem)):
+        for column in range(len(problem[0])):
+            if len(problem[row][column]) != 1:
                 return False
     return True
 
@@ -105,14 +105,13 @@ def solve(problem):
     solved = False
     while not solved:
         count = 0
-        for i in range(len(problem)):
-            for j in range(len(problem[0])):
-                if len(problem[i][j]) == 1:
-                    location = (i, j)
-                    listOfLocations = (getRowLocations(i) +
-                                       getColumnLocations(j) +
-                                       getBoxLocations(location))
-                    count += eliminate(problem, location, listOfLocations)
+        for row in range(len(problem)):
+            for column in range(len(problem[0])):
+                if len(problem[row][column]) == 1:
+                    listOfLocations = (getRowLocations(row) +
+                                       getColumnLocations(column) +
+                                       getBoxLocations((row, column)))
+                    count += eliminate(problem, (row, column), listOfLocations)
         if count == 0:
             return False
         solved = isSolved(problem)
@@ -123,16 +122,16 @@ def print_sudoku(problem):
     """Prints the Sudoku array (given as a list of lists of integers) in
     the following form, using dots to represent zeros."""
     border = "+-------+-------+-------+"
-    for i in range(len(problem)):
-        if i == 0 or i == 3 or i == 6:
+    for row in range(len(problem)):
+        if row in {0, 3, 6}:
             print(border)
-        for j in range(len(problem[0])):
-            if j == 0 or j == 3 or j == 6:
+        for column in range(len(problem[0])):
+            if column in {0, 3, 6}:
                 print("| ", end='')
-            if problem[i][j] == 0:
+            if problem[row][column] == 0:
                 print(". ", end='')
             else:
-                print(str(problem[i][j]) + " ", end='')
+                print(str(problem[row][column]) + " ", end='')
         print("|")
     print(border)
 
