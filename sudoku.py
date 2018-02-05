@@ -12,23 +12,20 @@ def read_sudoku(file_name):
 def convertToSets(problem):
     """Given a two-dimensional array `problem` of integers, create and
     return a new two-dimensional array of sets."""
-    new_lst = [[i for i in j] for j in problem]
-    for i in range(len(new_lst)):
-        for j in range(len(new_lst[0])):
-            if new_lst[i][j] == 0:
-                s = set(range(1, 10))
-                new_lst[i][j] = s
+    new_lst = [[y for y in x] for x in problem]
+    for row in range(len(new_lst)):
+        for column in range(len(new_lst[0])):
+            if new_lst[row][column] == 0:
+                new_lst[row][column] = set(range(1, 10))
             else:
-                s = set()
-                s.add(new_lst[i][j])
-                new_lst[i][j] = s
+                new_lst[row][column] = set([new_lst[row][column]])
     return new_lst
 
 
 def convertToInts(problem):
     """Given a two-dimensional array `problem` of sets, create and return a
     new two-dimensional array of integers."""
-    new_lst = [[i for i in j] for j in problem]
+    new_lst = [[y for y in x] for x in problem]
     for i in range(len(new_lst)):
         for j in range(len(new_lst[0])):
             if len(new_lst[i][j]) > 1:
@@ -41,13 +38,13 @@ def convertToInts(problem):
 def getRowLocations(rowNumber):
     """Given a `rowNumber`, return a list of all nine "locations" 
     row, column)`  tuples) in that row."""
-    return [(rowNumber, i) for i in range(9)]
+    return [(rowNumber, columnNumber) for columnNumber in range(9)]
 
 
 def getColumnLocations(columnNumber):
     """Given a `columnNumber`, return a list of all nine "locations"
     (`(row, column)`  tuples) in that column."""
-    return [(i, columnNumber) for i in range(9)]
+    return [(rowNumber, columnNumber) for rowNumber in range(9)]
 
 
 def getBoxLocations(location):
@@ -154,8 +151,8 @@ def main():
                     print("Location " + str((i, j)) + " might be any of " +
                           str(problemAsSets[i][j]))
     ask = input("Do you want to read in and solve another puzzle? (Y/y): ")
-    accpt = {'Y', 'y', 'Yes', 'yes', 'YES'}
-    if ask in accpt:
+    accept = {'Y', 'y', 'Yes', 'yes', 'YES'}
+    if ask in accept:
         main()
 
 
