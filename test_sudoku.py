@@ -71,6 +71,10 @@ def test_eliminate():
     assert sets3 == [[{1, 5}, {3}, {4}], [{1}, {5, 7}, {2}], [{1, 5}, {2}, {4, 6, 9}]]
 
 
+def test_eliminate_two():
+    pass
+
+
 def test_isSolved():
     array = [[{1}] * 9] * 9
     assert isSolved(array) == True
