@@ -50,25 +50,25 @@ def getColumnLocations(columnNumber):
 def getBoxLocations(location):
     """Return a list of all nine "locations"  (`(row, column)`  tuples) in
     the same box as the given `location`."""
-    r, c = location
-    if r / 3 < 1 and c / 3 < 1:  # top, left box
-        box_locations = [(i, j) for i in range(3) for j in range(3)]
-    elif r / 3 < 1 and 1 <= c / 3 < 2:  # top, middle box
-        box_locations = [(i, j) for i in range(3) for j in range(3, 6)]
-    elif r / 3 < 1 and 2 <= c / 3 < 3:  # top, right box
-        box_locations = [(i, j) for i in range(3) for j in range(6, 9)]
-    elif 1 <= r / 3 < 2 and c / 3 < 1:  # middle, left box
-        box_locations = [(i, j) for i in range(3, 6) for j in range(3)]
-    elif 1 <= r / 3 < 2 and 1 <= c / 3 < 2:  # middle, middle box
-        box_locations = [(i, j) for i in range(3, 6) for j in range(3, 6)]
-    elif 1 <= r / 3 < 2 and 2 <= c / 3 < 3:  # middle, right box
-        box_locations = [(i, j) for i in range(3, 6) for j in range(6, 9)]
-    elif 2 <= r / 3 < 3 and c / 3 < 1:  # bottom, left box
-        box_locations = [(i, j) for i in range(6, 9) for j in range(3)]
-    elif 2 <= r / 3 < 3 and 1 <= c / 3 < 2:  # bottom, middle box
-        box_locations = [(i, j) for i in range(6, 9) for j in range(3, 6)]
+    row, column = location
+    if row / 3 < 1 and column / 3 < 1:  # top, left box
+        box_locations = [(x, y) for x in range(3) for y in range(3)]
+    elif row / 3 < 1 and 1 <= column / 3 < 2:  # top, middle box
+        box_locations = [(x, y) for x in range(3) for y in range(3, 6)]
+    elif row / 3 < 1 and 2 <= column / 3 < 3:  # top, right box
+        box_locations = [(x, y) for x in range(3) for y in range(6, 9)]
+    elif 1 <= row / 3 < 2 and column / 3 < 1:  # middle, left box
+        box_locations = [(x, y) for x in range(3, 6) for y in range(3)]
+    elif 1 <= row / 3 < 2 and 1 <= column / 3 < 2:  # middle, middle box
+        box_locations = [(x, y) for x in range(3, 6) for y in range(3, 6)]
+    elif 1 <= row / 3 < 2 and 2 <= column / 3 < 3:  # middle, right box
+        box_locations = [(x, y) for x in range(3, 6) for y in range(6, 9)]
+    elif 2 <= row / 3 < 3 and column / 3 < 1:  # bottom, left box
+        box_locations = [(x, y) for x in range(6, 9) for y in range(3)]
+    elif 2 <= row / 3 < 3 and 1 <= column / 3 < 2:  # bottom, middle box
+        box_locations = [(x, y) for x in range(6, 9) for y in range(3, 6)]
     else:  # bottom, right box
-        box_locations = [(i, j) for i in range(6, 9) for j in range(6, 9)]
+        box_locations = [(x, y) for x in range(6, 9) for y in range(6, 9)]
     return box_locations
 
 
@@ -85,6 +85,12 @@ def eliminate(problem, location, listOfLocations):
                 problem[x][y] -= single_set
                 count += 1
     return count
+
+
+def eliminate_two(problem, location, box_locations):
+    """For each list of box locations, based on the current location, check
+    if there is a lone number within all the location sets."""
+    pass
 
 
 def isSolved(problem):
@@ -144,11 +150,11 @@ def main():
     result = convertToInts(problemAsSets)
     print_sudoku(result)
     if not solved:
-        for i in range(len(problemAsSets)):
-            for j in range(len(problemAsSets[0])):
-                if len(problemAsSets[i][j]) > 1:
-                    print("Location " + str((i, j)) + " might be any of " +
-                          str(problemAsSets[i][j]))
+        for x in range(len(problemAsSets)):
+            for y in range(len(problemAsSets[0])):
+                if len(problemAsSets[x][y]) > 1:
+                    print("Location " + str((x, y)) + " might be any of " +
+                          str(problemAsSets[x][y]))
     ask = input("Do you want to read in and solve another puzzle? (Y/y): ")
     accept = {'Y', 'y', 'Yes', 'yes', 'YES'}
     if ask in accept:
