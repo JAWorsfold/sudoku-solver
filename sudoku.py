@@ -87,12 +87,6 @@ def eliminate(problem, location, listOfLocations):
     return count
 
 
-def eliminate_two(problem, location, box_locations):
-    """For each list of box locations, based on the current location, check
-    if there is a lone number within all the location sets."""
-    pass
-
-
 def isSolved(problem):
     """Given a two-dimensional array `problem` of sets, return `True` if
     the Sudoku problem has been solved (every set contains exactly one
@@ -122,6 +116,10 @@ def solve(problem):
             return False
         solved = isSolved(problem)
     return True
+
+# Add to solve:
+#     For each list of box locations, based on the current location, check
+#     if there is a lone number within all the location sets.
 
 
 def print_sudoku(problem):
